@@ -54,16 +54,16 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 //	if (localFakerLib) {
-//		modImplementation("dev.bagel.fakerlib:FakerLib:${project.fakerlib_version}")
+		modImplementation("dev.bagel.fakerlib:FakerLib:${project.fakerlib_version}")
 //	}
 //	else {
-		modImplementation("maven.modrinth:fakerlib:${project.fakerlib_version}")
+//		modImplementation("maven.modrinth:fakerlib:${project.fakerlib_version}")
 //	}
 //	if (localAttributes) {
-//		modImplementation("dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
+		modImplementation("dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
 //	}
 //	else {
-		modImplementation("maven.modrinth:zenith-attributes:${project.zenith_attributes_version}")
+//		modImplementation("maven.modrinth:zenith-attributes:${project.zenith_attributes_version}")
 //	}
 
 	// Mixin^2 for mod compat
@@ -80,8 +80,6 @@ dependencies {
 	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:model_loader:${project.port_lib_version}"))
 	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:model_materials:${project.port_lib_version}"))
 
-	modRuntimeOnly include("maven.modrinth:AdditionalEntityAttributes:${project.additional_entity_attributes_version}")
-
 	modCompileOnly modRuntimeOnly("vazkii.patchouli:Patchouli:${project.patchouli_version}"), {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
@@ -91,8 +89,6 @@ dependencies {
 
 	// CCA + PAL
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}")
-	modRuntimeOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}")
-
 	modImplementation("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}")
 
 	// ModMenu
