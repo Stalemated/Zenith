@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.masterwork;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.mixin.accessors.LivingEntityInvoker;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.minecraft.ChatFormatting;
@@ -44,6 +46,7 @@ public class ScavengerEnchant extends Enchantment {
             if (drops == null) return false;
             int scavenger = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
             if (scavenger > 0 && p.level().random.nextInt(100) < scavenger * 2.5F) {
+                if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Scavenger triggered");
                 ((LivingEntityInvoker) target).callDropFromLootTable(source, true);
                 target.captureDrops(drops);
             }

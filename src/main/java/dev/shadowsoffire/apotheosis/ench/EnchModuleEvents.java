@@ -90,7 +90,6 @@ public class EnchModuleEvents {
     public static void drops()  {
         Ench.Enchantments.SCAVENGER.drops();
         Ench.Enchantments.SPEARFISHING.addFishes();
-        Ench.Enchantments.KNOWLEDGE.drops();
     }
 
     public static void dropsWarden() {
