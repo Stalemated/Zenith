@@ -1,7 +1,9 @@
 # Zenith
 
-## This mod is pretty much in a (mostly) functional dev limbo. It's source is a total mess that I made while learning to program. I'm now a full time software dev, and the mere thought of working on Zenith is painful. There's simply nothing left for me to learn from it, which is my primary motivator for projects. Just bug whack-a-mole is left for me. 
-With that being said, I would like to give a special thanks to Muon. You're the reason I even picked up this project. You kept telling me I should fix up this buggy mess of a mod because your server kept crashing because of it, and it led me to a path of becoming a professional programmer. Thank you for egging me on. (even when it got on my nerves :P)
+> **Note:** This project is now being maintained by me.
+> I would like to extend a huge thank you to **Bagel** and **Safro** for their work on this mod and for giving me the opportunity to continue developing and maintaining their project.
+> 
+> Any bugs or issues should be reported to this github, in the issues tab.
 
 https://www.curseforge.com/minecraft/mc-mods/zenith
 
@@ -21,7 +23,7 @@ Zenith requires both [FakerLib](https://github.com/TheWinABagel/FakerLib) and [Z
 
 For each of these dependencies, you must clone the repository and then publish it to `mavenLocal`:
 
-```
+```bash
 ./gradlew.bat publishToMavenLocal
 ```
 
@@ -31,12 +33,14 @@ For each of these dependencies, you must clone the repository and then publish i
 
 From here, you should be able to build Zenith:
 
-```
+```bash
 ./gradlew.bat build
 ```
 
 ## Credits
 
+- **TheWinABagel**: Previous maintainer and developer.
+- **Safro**: Original developer of Zenith and creator of the Fabric port.
 - **Shadows of Fire**: Creator of Apotheosis and the forge maintainer
 - **Faellynna**: Artist of Apotheosis
 
