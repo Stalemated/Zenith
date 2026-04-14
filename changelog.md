@@ -1,5 +1,8 @@
 
 
+## 1.2.6
+* Removed Porting Lib's dependency from the KOTA enchant, fixes the enchant not working in certain environments
+
 ## 1.2.5
 * Fix some tooltip log spam with EMI
 
