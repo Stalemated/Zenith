@@ -218,7 +218,7 @@ modrinth {
 	uploadFile = remapJar
 	gameVersions = ["1.20.1"]
 	loaders = ["fabric"]
-	changelog = "[Changelog](https://github.com/TheWinABagel/Zenith/blob/1.20/changelog.md)"
+	changelog = "[Changelog](https://github.com/Stalemated/Zenith/blob/1.20/changelog.md)"
 	//debugMode = true
 	dependencies {
 		required.project "fabric-api"
@@ -232,7 +232,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	apiToken = System.getenv("cf_token")
 	//debugMode = true
 	def mainFile = upload(620928, remapJar)
-	mainFile.changelog = "https://github.com/TheWinABagel/Zenith/blob/1.20/changelog.md"
+	mainFile.changelog = "https://github.com/Stalemated/Zenith/blob/1.20/changelog.md"
 	mainFile.releaseType = "release"
 	//mainFile.addJavaVersion("17")
 	mainFile.addGameVersion("1.20.1")
