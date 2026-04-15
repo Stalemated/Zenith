@@ -35,7 +35,6 @@ public class PotionModule {
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Potion");
     public static final PotionCharmItem POTION_CHARM = new PotionCharmItem();
     public static final Item LUCKY_FOOT = new GlowyBlockItem.GlowyItem(new Item.Properties());
-    public static int knowledgeMult = 4;
     public static boolean charmsInTrinketsOnly = false;
     public static boolean yeetInvalidCharms = false;
 
@@ -91,8 +90,7 @@ public class PotionModule {
     public static void reload(boolean e) {
         Configuration config = new Configuration(new File(Apotheosis.configDir, "potion.cfg"));
         config.setTitle("Zenith Potion Module Configuration");
-        knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE,
-            "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.\nServer-authoritative.");
+
         charmsInTrinketsOnly = config.getBoolean("Restrict Charms to Trinkets", "general", charmsInTrinketsOnly, "If Potion Charms will only work when in a trinkets slot, instead of in the inventory.");
 
         String[] defExt = { BuiltInRegistries.MOB_EFFECT.getKey(MobEffects.NIGHT_VISION).toString(), BuiltInRegistries.MOB_EFFECT.getKey(MobEffects.HEALTH_BOOST).toString() };
