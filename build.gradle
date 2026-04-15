@@ -12,8 +12,8 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-def localFakerLib = findProject(':FakerLib') != null
-def localAttributes = findProject(':ZenithAttributes') != null
+/*def localFakerLib = findProject(':FakerLib') != null
+def localAttributes = findProject(':ZenithAttributes') != null*/
 
 repositories {
 	maven { url = 'https://maven.parchmentmc.org' }						//Parchment mappings
@@ -29,7 +29,7 @@ repositories {
 	maven { url = "https://cursemaven.com" }
 	maven { url = "https://maven.bai.lol" }
 	mavenLocal()														//Fakerlib, Zenith Attributes TODO Create maven/move to jitpack
-	maven {
+	/*maven {
 		name = "MrCrayfish (GitHub)"
 		url = "https://maven.pkg.github.com/MrCrayfish/Maven"
 		credentials {
@@ -40,7 +40,7 @@ repositories {
 		content {
 			includeGroup "com.mrcrayfish"
 		}
-	}
+	}*/
 
 }
 
@@ -48,7 +48,7 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.layered() {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip")
+		parchment("org.parchmentmc.data:parchment-1.20.1:${project.parchment_version}@zip")
 	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
@@ -60,7 +60,7 @@ dependencies {
 //		modImplementation("maven.modrinth:fakerlib:${project.fakerlib_version}")
 //	}
 //	if (localAttributes) {
-		modImplementation("dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
+		modImplementation("com.stalemated:ZenithAttributes:${project.zenith_attributes_renewed_version}")
 //	}
 //	else {
 //		modImplementation("maven.modrinth:zenith-attributes:${project.zenith_attributes_version}")
@@ -137,11 +137,11 @@ dependencies {
 
 
 	//puzzlelib
-	modCompileOnly "curse.maven:puzzles-lib-495476:4847147"
+	modCompileOnly "curse.maven:puzzles-lib-495476:${project.puzzles_lib_id}"
 
 	//dragon loot
-	modCompileOnly "curse.maven:dragonloot-424480:4656260"
-	modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:11.1.106") { //cloth config, required by dragon loot
+	modCompileOnly "curse.maven:dragonloot-424480:${project.dragonloot_id}"
+	modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") { //cloth config, required by dragon loot
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
@@ -153,21 +153,21 @@ dependencies {
 //	modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.20.1-1.9.3"
 
 	//modern industrialization
-	modCompileOnly "curse.maven:modern-industrialization-405388:4775647", {
+	modCompileOnly "curse.maven:modern-industrialization-405388:${project.modern_industrialization_id}", {
 		exclude(group: "me.shedaniel")
 	}
 
 	//Iceberg
-	modCompileOnly "curse.maven:iceberg-fabric-539382:4953470"
-	modCompileOnly "curse.maven:equipment-compare-fabric-541329:4940609"
+	modCompileOnly "curse.maven:iceberg-fabric-539382:${project.iceberg_id}"
+	modCompileOnly "curse.maven:equipment-compare-fabric-541329:${project.equipment_compare_fabric_id}"
 
 	//spectrum
 	modCompileOnly "com.github.DaFuqs:Spectrum:${project.spectrum_version}"
 
 	//YUNGS api
-	modCompileOnly "curse.maven:yungs-api-fabric-421649:5147000"
+	modCompileOnly "curse.maven:yungs-api-fabric-421649:${project.yungs_api_id}"
 
-	modImplementation "curse.maven:endremastered-fabric-515523:4972591"
+	modImplementation "curse.maven:endremastered-fabric-515523:${project.end_remastered_id}"
 
 }
 loom {
@@ -178,7 +178,7 @@ processResources {
 	inputs.property "version", project.version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version, "loader_version": project.loader_version, "fakerlib_version": project.fakerlib_version, "zenith_attributes_version": project.zenith_attributes_version, "fapi_version": project.fabric_version
+		expand "version": project.version, "loader_version": project.loader_version, "fakerlib_version": project.fakerlib_version, "zenith_attributes_renewed_version": project.zenith_attributes_renewed_version, "fapi_version": project.fabric_version
 	}
 }
 
@@ -210,6 +210,7 @@ publishing {
 	}
 }
 
+/*
 modrinth {
 	token = System.getenv("MODRINTH_TOKEN")
 	projectId = "zenith"
@@ -245,3 +246,4 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.addOptional("roughly-enough-items") //REI
 	mainFile.addOptional("enchantment-descriptions") //Enchantment Descriptions
 }
+*/

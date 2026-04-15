@@ -2,19 +2,20 @@
   "schemaVersion": 1,
   "id": "zenith",
   "version": "${version}",
-  "name": "Zenith",
-  "description": "Unofficial Fabric port of Apotheosis.",
+  "name": "Zenith Renewed",
+  "description": "Fabric port of Apotheosis. Overhauls enchanting, spawners, bosses, and adds powerful weapon affixes!",
   "authors": [
+    "Stalemated",
     "ShadowsOfFire (Forge)",
-    "Safro (original port)",
-    "TheWinABagel"
+    "Safro (Original Port)",
+    "TheWinABagel (Former Developer)"
   ],
   "contact": {
-    "homepage": "https://curseforge.com/minecraft/mc-mods/zenith",
-    "sources": "https://github.com/thewinabagel/Zenith",
-    "issues": "https://github.com/thewinabagel/Zenith/issues"
+    "homepage": "https://curseforge.com/minecraft/mc-mods/zenith-renewed",
+    "sources": "https://github.com/Stalemated/ZenithRenewed",
+    "issues": "https://github.com/Stalemated/ZenithRenewed/issues"
   },
-  "license": "MIT License",
+  "license": "MIT",
   "icon": "assets/zenith/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -72,7 +73,7 @@
     "minecraft": "1.20.1",
     "java": ">=17",
     "fakerlib": ">=${fakerlib_version}",
-    "zenith_attributes": ">=${zenith_attributes_version}"
+    "zenith_attributes": ">=${zenith_attributes_renewed_version}"
   },
   "suggests": {
     "roughlyenoughitems": "*",
