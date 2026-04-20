@@ -28,6 +28,7 @@ repositories {
 	maven { url = "https://maven.terraformersmc.com" }					//Modmenu
 	maven { url = "https://cursemaven.com" }
 	maven { url = "https://maven.bai.lol" }
+	maven { url = 'https://maven.kosmx.dev/' }                          //Player Animation
 	mavenLocal()														//Fakerlib, Zenith Attributes TODO Create maven/move to jitpack
 	/*maven {
 		name = "MrCrayfish (GitHub)"

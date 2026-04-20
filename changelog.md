@@ -1,5 +1,9 @@
 
 
+## 2.0.1
+* Removed mentions of Ancient Knowledge in the config (moved to Zenith Attributes Renewed config)
+* Updated Zenith Attributes Renewed dependency
+
 ## 2.0.0
 * Removed Porting Lib's dependency from the KOTA enchant, fixes the enchant not working in certain environments
 * Bump version to 2.0.0
