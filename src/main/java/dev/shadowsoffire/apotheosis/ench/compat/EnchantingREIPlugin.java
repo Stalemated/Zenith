@@ -41,11 +41,15 @@ public class EnchantingREIPlugin implements REIClientPlugin {
         EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedDiaSword);
         ItemStack enchBook = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchBook);
+        ItemStack cursedBook = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedBook);
 
         registry.add(new AnvilRecipe(null, List.of(enchDiaSword), stackOf(Blocks.COBWEB), stackOf(Items.DIAMOND_SWORD)));
         registry.add(new AnvilRecipe(null, List.of(cursedDiaSword), stackOf(Ench.Items.PRISMATIC_WEB), stackOf(Items.DIAMOND_SWORD)));
         registry.add(new AnvilRecipe(null, List.of(enchDiaSword), stackOf(Ench.Items.SCRAP_TOME), List.of(enchBook)));
         registry.add(new AnvilRecipe(null, stackOf(Items.DAMAGED_ANVIL), stackOf(Blocks.IRON_BLOCK), stackOf(Blocks.ANVIL)));
+        registry.add(new AnvilRecipe(null, List.of(enchBook), stackOf(Items.COBWEB), stackOf(Items.BOOK)));
+        registry.add(new AnvilRecipe(null, List.of(cursedBook), stackOf(Ench.Items.PRISMATIC_WEB), stackOf(Items.BOOK)));
 
         registry.registerFiller(EnchantingRecipe.class, EnchantingREIDisplay::new);
 

@@ -43,11 +43,17 @@ public class EnchEMIPlugin {
         EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedDiaSword);
         ItemStack enchBook = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchBook);
+        ItemStack cursedBook = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedBook);
 
         ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(enchDiaSword), EmiStack.of(Blocks.COBWEB),
                EmiStack.of(Items.DIAMOND_SWORD), Apotheosis.syntheticLoc("zenith_custom_cobweb_anvil")));
         ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(cursedDiaSword), EmiStack.of(Ench.Items.PRISMATIC_WEB),
                 EmiStack.of(Items.DIAMOND_SWORD), Apotheosis.syntheticLoc("zenith_custom_prismatic_cobweb_anvil")));
+        ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(enchBook), EmiStack.of(Blocks.COBWEB),
+               EmiStack.of(Items.BOOK), Apotheosis.syntheticLoc("zenith_custom_cobweb_book_anvil")));
+        ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(cursedBook), EmiStack.of(Ench.Items.PRISMATIC_WEB),
+                EmiStack.of(Items.BOOK), Apotheosis.syntheticLoc("zenith_custom_prismatic_cobweb_book_anvil")));
         ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(enchDiaSword), EmiStack.of(Ench.Items.SCRAP_TOME),
                 EmiStack.of(enchBook), Apotheosis.syntheticLoc("zenith_scrap_tome_anvil")));
         ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(Items.DAMAGED_ANVIL), EmiStack.of(Blocks.IRON_BLOCK),

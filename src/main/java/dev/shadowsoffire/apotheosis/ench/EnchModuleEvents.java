@@ -17,12 +17,15 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -45,10 +48,12 @@ public class EnchModuleEvents {
 
     public static void anvilEvent() {
         Events.AnvilUpdate.UPDATE_ANVIL.register((e) -> {
-            if (e.left.isEnchanted()) {
+            if (e.left.isEnchanted() || e.left.is(Items.ENCHANTED_BOOK)) {
                 if (e.right.getItem() == Items.COBWEB) {
                     ItemStack stack = e.left.copy();
-                    EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue)), stack);
+                    var enchants = EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+
+                    stack = setEnchantsByCobweb(stack, enchants);
                     e.cost = 1;
                     e.materialCost = 1;
                     e.output = stack;
@@ -56,7 +61,9 @@ public class EnchModuleEvents {
                 }
                 else if (e.right.getItem() == dev.shadowsoffire.apotheosis.ench.Ench.Items.PRISMATIC_WEB) {
                     ItemStack stack = e.left.copy();
-                    EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> !ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue)), stack);
+                    var enchants = EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> !ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+
+                    stack = setEnchantsByCobweb(stack, enchants);
                     e.cost = 30;
                     e.materialCost = 1;
                     e.output = stack;
@@ -78,6 +85,24 @@ public class EnchModuleEvents {
             return false;
         });
 
+    }
+
+    @NotNull
+    private static ItemStack setEnchantsByCobweb(ItemStack stack, Map<Enchantment, Integer> enchants) {
+        if (enchants.isEmpty() && stack.is(Items.ENCHANTED_BOOK)) {
+            ItemStack book = new ItemStack(Items.BOOK);
+            if (stack.hasTag()) {
+                book.setTag(stack.getTag().copy());
+                book.removeTagKey("StoredEnchantments");
+            }
+            stack = book;
+        } else {
+            stack.removeTagKey(stack.is(Items.ENCHANTED_BOOK) ? "StoredEnchantments" : "Enchantments");
+            if (!enchants.isEmpty()) {
+                EnchantmentHelper.setEnchantments(enchants, stack);
+            }
+        }
+        return stack;
     }
 
     public static void repairEvent() {
