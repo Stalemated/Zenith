@@ -84,10 +84,10 @@ public class GemCuttingEMIRecipe implements EmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         widgets.addTexture(TEXTURES, 1, 1, 148, 78, 0, 0);
-        widgets.addSlot(EmiStack.of(gem), 46, 14).drawBack(false);
-        widgets.addSlot(EmiStack.of(dust), 5, 14).drawBack(false);
-        widgets.addSlot(EmiStack.of(gem), 46, 57).drawBack(false);
-        widgets.addSlot(EmiIngredient.of(Ingredient.of(materials)), 87, 14).drawBack(false);
-        widgets.addSlot(EmiStack.of(out), 129, 14).recipeContext(this).drawBack(false);
+        widgets.addSlot(EmiStack.of(gem), 48, 37).drawBack(false);
+        widgets.addSlot(EmiStack.of(dust), 76, 56).drawBack(false);
+        widgets.addSlot(EmiStack.of(gem), 19, 56).drawBack(false);
+        widgets.addSlot(EmiIngredient.of(Ingredient.of(materials)), 48, 4).drawBack(false);
+        widgets.addSlot(EmiStack.of(out), 117, 35).recipeContext(this).drawBack(false);
     }
 }
