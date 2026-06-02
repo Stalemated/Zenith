@@ -1,5 +1,19 @@
 
 
+## 2.0.2
+
+### New Features
+* Enchanted books can now be combined in an anvil with either a Cobweb or Prismatic Cobweb to remove enchants or curses
+* Compat: Spell Power's Magic Prot enchant is now compatible with all other protections if the Enchanting module is active
+
+### Fixes
+* Fixed upgrading gems in batch taking up the same materials as 1 gem, now only 1 gem at a time is allowed to be cut
+* Fixed the left tooltip being duplicated for all Zenith screens (Enchanting Table, Augmenting Table, etc...)
+* Fixed some z fighting between item/hovered tooltips and the left tooltip
+* Fixed the Augmenting Table and the Gem Fused Slate not being in the creative menu
+* Fixed salvaging recipe inputs sometimes having the line "ZENITH_REMOVE_MARKER" in their tooltip
+* Fixed gem cutting emi recipe item position
+
 ## 2.0.1
 * Removed mentions of Ancient Knowledge in the config (moved to Zenith Attributes Renewed config)
 * Updated Zenith Attributes Renewed dependency
