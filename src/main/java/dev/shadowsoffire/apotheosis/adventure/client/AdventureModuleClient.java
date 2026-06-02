@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.client;
 
-import com.anthonyhilyard.iceberg.events.RenderTooltipEvents;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -35,7 +34,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -59,7 +57,6 @@ import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
@@ -92,17 +89,18 @@ public class AdventureModuleClient {
         renderBossBeam();
         BossSpawnMessage.init();
         RerollResultMessage.init();
-        CoreShaderRegistrationCallback.EVENT.register(context -> context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> {
-            CustomRenderTypes.grayShader = shaderInstance;
-        }));
+        CoreShaderRegistrationCallback.EVENT.register(context -> context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> CustomRenderTypes.grayShader = shaderInstance));
         AdventureKeys.registerKeys();
         AdventureKeys.handleKeys();
     }
 
     public static void onBossSpawn(BlockPos pos, float[] color) {
         BOSS_SPAWNS.add(new BossSpawnData(pos, color, new MutableInt()));
-        Minecraft.getInstance().getSoundManager()
-            .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.getRandom(), Minecraft.getInstance().player.blockPosition()));
+        Player player = Minecraft.getInstance().player;
+        if (player != null) {
+            Minecraft.getInstance().getSoundManager()
+                    .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, player.getRandom(), player.blockPosition()));
+        }
     }
 
     // This renders a beacon beam when a boss spawns
@@ -112,9 +110,7 @@ public class AdventureModuleClient {
 
             MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
             Player p = Minecraft.getInstance().player;
-            for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
-                BossSpawnData data = BOSS_SPAWNS.get(i);
-
+            for (BossSpawnData data : BOSS_SPAWNS) {
                 stack.pushPose();
                 float partials = context.tickDelta();
 
@@ -141,6 +137,8 @@ public class AdventureModuleClient {
 
     public static void tooltips() {
         AddAttributeTooltipsEvent.EVENT.register((stack, player, tooltip, attributeTooltipIterator, flag) -> {
+            if (stack.hasTag() && stack.getTag() != null && stack.getTag().getBoolean("ZENITH_HIDE_SOCKETS")) return;
+            
             int sockets = SocketHelper.getSockets(stack);
             if (sockets > 0) attributeTooltipIterator.add(Component.literal("ZENITH_REMOVE_MARKER"));
         });
@@ -187,9 +185,7 @@ public class AdventureModuleClient {
             if (stack.hasTag()) {
                 Map<DynamicHolder<? extends Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
                 List<Component> components = new ArrayList<>();
-                Consumer<Component> dotPrefixer = afxComp -> {
-                    components.add(Component.translatable("text.zenith.dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
-                };
+                Consumer<Component> dotPrefixer = afxComp -> components.add(Component.translatable("text.zenith.dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
                 affixes.values().stream()
                         .sorted(Comparator.comparingInt(a -> a.affix().get().getType().ordinal()))
                         .map(AffixInstance::getDescription)
@@ -304,11 +300,11 @@ public class AdventureModuleClient {
         for (Affix a : AffixRegistry.INSTANCE.getValues()) {
             ResourceLocation id = AffixRegistry.INSTANCE.getKey(a);
             if (!I18n.exists("affix." + id)) {
-                sb.append(json.formatted("affix." + id) + "\n");
+                sb.append(json.formatted("affix." + id)).append("\n");
                 any = true;
             }
             if (!I18n.exists("affix." + id + ".suffix")) {
-                sb.append(json.formatted("affix." + id + ".suffix") + "\n");
+                sb.append(json.formatted("affix." + id + ".suffix")).append("\n");
                 any = true;
             }
         }

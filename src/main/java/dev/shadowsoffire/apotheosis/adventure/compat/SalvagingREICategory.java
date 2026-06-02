@@ -58,7 +58,7 @@ public class SalvagingREICategory extends ZenithREICatgeory<SalvagingREIDisplay>
             String text = String.format("%d-%d", data.getMin(), data.getMax());
 
             float x = 59 + 18 * (idx % 2) + (16 - font.width(text) * 0.5F) + originX;
-            float y = 23F + 18 * (idx / 2) + originY;
+            float y = 23F + 18 * ((float) idx / 2) + originY;
 
             float scale = 0.5F;
 

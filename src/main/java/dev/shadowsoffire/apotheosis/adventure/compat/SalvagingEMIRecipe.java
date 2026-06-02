@@ -11,8 +11,10 @@ import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalvagingEMIRecipe implements EmiRecipe {
@@ -23,7 +25,14 @@ public class SalvagingEMIRecipe implements EmiRecipe {
     private final EmiIngredient input;
 
     public SalvagingEMIRecipe(SalvagingRecipe recipe) {
-        this.input = EmiIngredient.of(recipe.getInput());
+        List<EmiStack> cleanedInputs = new ArrayList<>();
+        for (ItemStack stack : recipe.getInput().getItems()) {
+            ItemStack copy = stack.copy();
+            copy.getOrCreateTag().putBoolean("ZENITH_HIDE_SOCKETS", true);
+            cleanedInputs.add(EmiStack.of(copy));
+        }
+
+        this.input = EmiIngredient.of(cleanedInputs);
         this.outputs = recipe.getOutputs();
         this.id = recipe.getId();
     }
@@ -81,7 +90,7 @@ public class SalvagingEMIRecipe implements EmiRecipe {
                 String text = String.format("%d-%d", data.getMin(), data.getMax());
 
                 float x = 59 + 18 * (idx % 2) + (16 - font.width(text) * 0.5F);
-                float y = 23F + 18 * (idx / 2);
+                float y = 23F + 18 * ((float) idx / 2);
 
                 float scale = 0.5F;
 
