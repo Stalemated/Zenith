@@ -38,12 +38,10 @@ public interface DrawsOnLeft {
         }
 
         List<FormattedText> split = new ArrayList<>();
-        int lambdastupid = maxWidth;
-        list.forEach(comp -> split.addAll(((ScreenAccessor) ths()).getFont().getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
         list.forEach(comp -> split.addAll(((ScreenAccessor) ths()).getFont().getSplitter().splitLines(comp, maxWidth, comp.getStyle())));
 
         int xPos = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 16 - split.stream().map(((ScreenAccessor) ths()).getFont()::width).max(Integer::compare).get();
-        ((IComponentTooltip) gfx).zenith$RenderComponentTooltip(((ScreenAccessor) ths()).getFont(), split, xPos, y); // copying forge methods is my passion
+        ((IComponentTooltip) gfx).zenith$RenderComponentTooltip(((ScreenAccessor) ths()).getFont(), split, xPos, y);
     }
 
     default AbstractContainerScreen<?> ths() {

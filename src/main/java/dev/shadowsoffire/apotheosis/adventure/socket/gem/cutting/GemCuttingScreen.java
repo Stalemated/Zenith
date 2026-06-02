@@ -72,10 +72,13 @@ public class GemCuttingScreen extends AdventureContainerScreen<GemCuttingMenu> i
     }
 
     protected void updateBtnStatus() {
+        if (this.upgradeBtn == null) return;
+
         ItemStack gem = this.menu.getSlot(0).getItem();
         ItemStack left = this.menu.getSlot(1).getItem();
         ItemStack bot = this.menu.getSlot(2).getItem();
         ItemStack right = this.menu.getSlot(3).getItem();
+        
         for (GemCuttingRecipe r : GemCuttingMenu.RECIPES) {
             if (r.matches(gem, left, bot, right)) {
                 this.upgradeBtn.active = true;
@@ -128,7 +131,7 @@ public class GemCuttingScreen extends AdventureContainerScreen<GemCuttingMenu> i
                 list.add(Component.translatable("text.zenith.cut_cost").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
                 list.add(CommonComponents.EMPTY);
                 int dustCost = GemCuttingMenu.getDustCost(rarity.get());
-                boolean hasDust = dust > dustCost;
+                boolean hasDust = dust >= dustCost;
                 list.add(Component.translatable("text.zenith.cost", dustCost, Adventure.Items.GEM_DUST.getName(ItemStack.EMPTY))
                     .withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
                 boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && rarity == secondary.rarity();
@@ -149,7 +152,11 @@ public class GemCuttingScreen extends AdventureContainerScreen<GemCuttingMenu> i
         Item rarityMat = rarity.get().getMaterial();
         ItemStack slotMat = this.menu.getSlot(3).getItem();
         boolean hasMats = slotMat.getItem() == rarityMat && slotMat.getCount() >= cost;
-        list.add(AttributeHelper.list().append(Component.translatable("text.zenith.cost", cost, rarityMat.getName(ItemStack.EMPTY)).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
+        list.add(AttributeHelper.list()
+                .append(Component.translatable(
+                        "text.zenith.cost", cost, rarityMat.getName(ItemStack.EMPTY)
+                        )
+                        .withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
 
     }
 
