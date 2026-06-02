@@ -41,7 +41,7 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         if (!Apotheosis.enableAdventure) return false;
         WorldGenLevel world = ctx.level();
-        if (!AdventureConfig.canGenerateIn(world)) return false;
+        if (AdventureConfig.cannotGenerateIn(world)) return false;
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
 

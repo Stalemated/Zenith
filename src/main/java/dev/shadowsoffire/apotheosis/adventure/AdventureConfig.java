@@ -62,7 +62,6 @@ public class AdventureConfig {
     public static boolean cleaveHitsPlayers = false;
     public static boolean collapsableGemEntries = true;
 
-
     public static void load(Configuration c) {
         c.setTitle("Zenith Adventure Module Config");
 
@@ -77,7 +76,7 @@ public class AdventureConfig {
                 TYPE_OVERRIDES.put(new ResourceLocation(split[0]), type);
             }
             catch (Exception e) {
-                AdventureModule.LOGGER.error("Invalid type override entry: " + s + " will be ignored!");
+                AdventureModule.LOGGER.error("Invalid type override entry: {} will be ignored!", s);
                 e.printStackTrace();
             }
         }
@@ -102,7 +101,7 @@ public class AdventureConfig {
                 AFFIX_ITEM_LOOT_RULES.add(LootPatternMatcher.parse(s));
             }
             catch (Exception e) {
-                AdventureModule.LOGGER.error("Invalid affix item loot rule: " + s + " will be ignored");
+                AdventureModule.LOGGER.error("Invalid affix item loot rule: {} will be ignored", s);
                 e.printStackTrace();
             }
         }
@@ -116,7 +115,7 @@ public class AdventureConfig {
                 GEM_LOOT_RULES.add(LootPatternMatcher.parse(s));
             }
             catch (Exception e) {
-                AdventureModule.LOGGER.error("Invalid gem loot rule: " + s + " will be ignored");
+                AdventureModule.LOGGER.error("Invalid gem loot rule: {} will be ignored", s);
                 e.printStackTrace();
             }
         }
@@ -129,7 +128,7 @@ public class AdventureConfig {
                 AFFIX_CONVERT_LOOT_RULES.add(LootPatternMatcher.parse(s));
             }
             catch (Exception e) {
-                AdventureModule.LOGGER.error("Invalid affix convert loot rule: " + s + " will be ignored");
+                AdventureModule.LOGGER.error("Invalid affix convert loot rule: {} will be ignored", s);
                 e.printStackTrace();
             }
         }
@@ -146,7 +145,7 @@ public class AdventureConfig {
                 AFFIX_CONVERT_RARITIES.put(dim, new RarityClamp.Simple(min, max));
             }
             catch (Exception e) {
-                AdventureModule.LOGGER.error("Invalid Affix Convert Rarity: " + s + " will be ignored");
+                AdventureModule.LOGGER.error("Invalid Affix Convert Rarity: {} will be ignored", s);
                 e.printStackTrace();
             }
         }
@@ -163,7 +162,7 @@ public class AdventureConfig {
                 GEM_DIM_RARITIES.put(dim, new RarityClamp.Simple(min, max));
             }
             catch (Exception e) {
-                AdventureModule.LOGGER.error("Invalid Gem Dimensional Rarity: " + s + " will be ignored");
+                AdventureModule.LOGGER.error("Invalid Gem Dimensional Rarity: {} will be ignored", s);
                 e.printStackTrace();
             }
         }
@@ -197,8 +196,10 @@ public class AdventureConfig {
                 "minecraft:the_end|0.018|SURFACE_OUTER_END",
                 "twilightforest:twilight_forest|0.05|NEEDS_SURFACE"
             },
-            "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1."
-                + "\nValid rules are visible here https://github.com/Shadows-of-Fire/Apotheosis/blob/1.19/src/main/java/shadows/apotheosis/adventure/boss/BossEvents.java#L174C27-L174C27");
+                """
+                        Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.
+                        Format is dimname|chance|rule, chance is a float from 0..1.
+                        Valid rules are visible here https://github.com/Shadows-of-Fire/Apotheosis/blob/1.19/src/main/java/shadows/apotheosis/adventure/boss/BossEvents.java#L174C27-L174C27""");
 
         BOSS_SPAWN_RULES.clear();
         for (String s : dims) {
@@ -207,7 +208,7 @@ public class AdventureConfig {
                 BOSS_SPAWN_RULES.put(new ResourceLocation(split[0]), Pair.of(Float.parseFloat(split[1]), BossSpawnRules.valueOf(split[2].toUpperCase(Locale.ROOT))));
             }
             catch (Exception e) {
-                AdventureModule.LOGGER.error("Invalid boss spawn rules: " + s + " will be ignored");
+                AdventureModule.LOGGER.error("Invalid boss spawn rules: {} will be ignored", s);
                 e.printStackTrace();
             }
         }
@@ -219,7 +220,7 @@ public class AdventureConfig {
                 DIM_WHITELIST.add(new ResourceLocation(s.trim()));
             }
             catch (ResourceLocationException e) {
-                AdventureModule.LOGGER.error("Invalid dim whitelist entry: " + s + " will be ignored");
+                AdventureModule.LOGGER.error("Invalid dim whitelist entry: {} will be ignored", s);
             }
         }
 
@@ -227,12 +228,12 @@ public class AdventureConfig {
 
     }
 
-    public static boolean canGenerateIn(WorldGenLevel world) {
+    public static boolean cannotGenerateIn(WorldGenLevel world) {
         ResourceKey<Level> key = world.getLevel().dimension();
-        return DIM_WHITELIST.contains(key.location());
+        return !DIM_WHITELIST.contains(key.location());
     }
 
-    public static record LootPatternMatcher(@Nullable String domain, Pattern pathRegex, float chance) {
+    public record LootPatternMatcher(@Nullable String domain, Pattern pathRegex, float chance) {
 
         public boolean matches(ResourceLocation id) {
             return (this.domain == null || this.domain.equals(id.getNamespace())) && this.pathRegex.matcher(id.getPath()).matches();
@@ -247,5 +248,4 @@ public class AdventureConfig {
             return new LootPatternMatcher(domain, pattern, chance);
         }
     }
-
 }

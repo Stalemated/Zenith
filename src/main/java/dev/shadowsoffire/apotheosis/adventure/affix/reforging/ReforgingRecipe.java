@@ -49,15 +49,15 @@ public record ReforgingRecipe(ResourceLocation id, DynamicHolder<LootRarity> rar
         @Override
         public void toNetwork(FriendlyByteBuf buf, ReforgingRecipe recipe) {
             buf.writeResourceLocation(recipe.rarity.getId());
-            buf.writeByte(recipe.matCost);
-            buf.writeByte(recipe.sigilCost);
-            buf.writeByte(recipe.levelCost);
+            buf.writeVarInt(recipe.matCost);
+            buf.writeVarInt(recipe.sigilCost);
+            buf.writeVarInt(recipe.levelCost);
         }
 
         @Override
         public ReforgingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             DynamicHolder<LootRarity> rarity = RarityRegistry.INSTANCE.holder(buf.readResourceLocation());
-            return new ReforgingRecipe(id, rarity, buf.readByte(), buf.readByte(), buf.readByte());
+            return new ReforgingRecipe(id, rarity, buf.readVarInt(), buf.readVarInt(), buf.readVarInt());
         }
 
     }

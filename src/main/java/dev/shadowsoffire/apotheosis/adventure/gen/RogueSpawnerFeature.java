@@ -26,12 +26,11 @@ public class RogueSpawnerFeature extends Feature<RogueSpawnerFeature.Config> {
         super(Config.CODEC);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean place(FeaturePlaceContext<Config> ctx) {
         if (!Apotheosis.enableAdventure) return false;
         WorldGenLevel world = ctx.level();
-        if (!AdventureConfig.canGenerateIn(world)) return false;
+        if (AdventureConfig.cannotGenerateIn(world)) return false;
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
         if (rand.nextFloat() <= ctx.config().successChance()) {
@@ -51,7 +50,7 @@ public class RogueSpawnerFeature extends Feature<RogueSpawnerFeature.Config> {
     /**
      * @param successChance The chance (from 0 to 1) that an attempted placement will actually attempt to place the feature.
      */
-    public static record Config(float successChance) implements FeatureConfiguration {
+    public record Config(float successChance) implements FeatureConfiguration {
 
         public static final Codec<Config> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                         Codec.floatRange(0, 1).fieldOf("success_chance").forGetter(Config::successChance))
