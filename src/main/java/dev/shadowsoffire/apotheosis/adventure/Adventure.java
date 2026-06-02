@@ -27,7 +27,6 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -146,7 +145,7 @@ public class Adventure {
                 .displayItems((a,b) -> {
                     Apoth.fill(b, Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST,
                             Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_UNNAMING, Items.BOSS_SUMMONER,
-                            Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE);
+                            Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.AUGMENTING_TABLE, Items.GEM_FUSED_SLATE);
                     GemItem.fillItemCategory(b);
                 })
                 .build();
@@ -183,7 +182,7 @@ public class Adventure {
 
         public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon"), new BossDungeonFeature());
         public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON_2 = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon_2"), new BossDungeonFeature2());
-        public static final Feature<RogueSpawnerFeature.Config> ROGUE_SPAWNER = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("rogue_spawner"), new RogueSpawnerFeature());;
+        public static final Feature<RogueSpawnerFeature.Config> ROGUE_SPAWNER = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("rogue_spawner"), new RogueSpawnerFeature());
         public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), () -> ItemFrameGemsProcessor.CODEC);
 
         public static void bootstrap() {}
