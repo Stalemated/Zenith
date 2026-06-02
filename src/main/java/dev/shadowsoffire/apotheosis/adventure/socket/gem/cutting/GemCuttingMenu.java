@@ -8,7 +8,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemInstance;
-import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemItem;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.server.level.ServerPlayer;
@@ -47,7 +46,13 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         super(Menus.GEM_CUTTING, id, playerInv);
         this.player = playerInv.player;
         this.access = access;
-        this.addSlot(new UpdatingSlot(this.inventory, 0, 62, 45, stack -> GemItem.getGem(stack).isBound()));
+
+        this.addSlot(new UpdatingSlot(this.inventory, 0, 62, 45, GemCuttingMenu::isValidMainGem) {
+            @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+        });
         this.addSlot(new UpdatingSlot(this.inventory, 1, 90, 64, stack -> stack.getItem() == Items.GEM_DUST));
         this.addSlot(new UpdatingSlot(this.inventory, 2, 33, 64, this::matchesMainGem));
         this.addSlot(new UpdatingSlot(this.inventory, 3, 62, 12, this::isValidMaterial));
@@ -173,6 +178,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         @Override
         public ItemStack getResult(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right) {
             ItemStack out = gem.copy();
+            out.setCount(1);
             AffixHelper.setRarity(out, RarityRegistry.next(AffixHelper.getRarity(out)).get());
             return out;
         }
