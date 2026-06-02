@@ -59,7 +59,7 @@ public class EnchModuleEvents {
                     e.output = stack;
                     return false;
                 }
-                else if (e.right.getItem() == dev.shadowsoffire.apotheosis.ench.Ench.Items.PRISMATIC_WEB) {
+                else if (e.right.getItem() == Ench.Items.PRISMATIC_WEB) {
                     ItemStack stack = e.left.copy();
                     var enchants = EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> !ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
