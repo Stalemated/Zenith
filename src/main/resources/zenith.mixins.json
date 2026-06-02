@@ -37,6 +37,7 @@
     "compat.clean_tooltips.absent.ItemStackMixin",
     "compat.dragonloot.present.ZenithDragonLootCompatAnvilMenuMixin",
     "compat.modern_industrialization.present.ReplicatorMachineBlockEntityMixin",
+    "compat.spell_power.present.MagicProtectionEnchantmentMixin",
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",
     "ench.EnchantmentHelperMixin",
