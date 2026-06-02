@@ -20,11 +20,10 @@ public interface DrawsOnLeft {
         if (list.isEmpty()) {
             return;
         }
-        int xPos = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 16 - list.stream().map(((ScreenAccessor) ths()).getFont()::width).max(Integer::compare).get();
+        int xPos = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 16 - list.stream().map(((ScreenAccessor) ths()).getFont()::width).max(Integer::compare).orElse(0);
         int maxWidth = 9999;
         if (xPos < 0) {
             maxWidth = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 6;
-            xPos = -8;
         }
         drawOnLeft(gfx, list, y, maxWidth);
     }
@@ -40,15 +39,19 @@ public interface DrawsOnLeft {
         List<FormattedText> split = new ArrayList<>();
         list.forEach(comp -> split.addAll(((ScreenAccessor) ths()).getFont().getSplitter().splitLines(comp, maxWidth, comp.getStyle())));
 
-        int xPos = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 16 - split.stream().map(((ScreenAccessor) ths()).getFont()::width).max(Integer::compare).get();
+        int xPos = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 16 - split.stream().map(((ScreenAccessor) ths()).getFont()::width).max(Integer::compare).orElse(0);
+        
+        gfx.pose().pushPose();
+        gfx.pose().translate(0, 0, -200);
         ((IComponentTooltip) gfx).zenith$RenderComponentTooltip(((ScreenAccessor) ths()).getFont(), split, xPos, y);
+        gfx.pose().popPose();
     }
 
     default AbstractContainerScreen<?> ths() {
         return (AbstractContainerScreen<?>) this;
     }
 
-    public static void draw(AbstractContainerScreen<?> screen, GuiGraphics gfx, List<Component> list, int y) {
+    static void draw(AbstractContainerScreen<?> screen, GuiGraphics gfx, List<Component> list, int y) {
         ((DrawsOnLeft) screen).drawOnLeft(gfx, list, y);
     }
 
